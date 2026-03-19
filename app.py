@@ -3,6 +3,9 @@ from flask import Flask, render_template, request, redirect, flash, send_from_di
 from werkzeug.utils import secure_filename
 from stegano import lsb
 import uuid
+import hashlib
+import base64
+from cryptography.fernet import Fernet, InvalidToken
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key_for_flash_messages'
@@ -16,6 +19,10 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def get_fernet_key(password):
+    digest = hashlib.sha256(password.encode()).digest()
+    return base64.urlsafe_b64encode(digest)
 
 @app.route('/')
 def index():
@@ -31,13 +38,14 @@ def encode():
         
         file = request.files['image']
         message = request.form.get('message')
+        password = request.form.get('password')
 
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
         
-        if not message:
-            flash('Secret message cannot be empty')
+        if not message or not password:
+            flash('Secret message and password cannot be empty')
             return redirect(request.url)
 
         if file and allowed_file(file.filename):
@@ -50,8 +58,12 @@ def encode():
             output_filepath = os.path.join(app.config['UPLOAD_FOLDER'], output_filename)
 
             try:
+                # Encrypt the message
+                f = Fernet(get_fernet_key(password))
+                encrypted_message = f.encrypt(message.encode()).decode()
+
                 # Stegano works best with PNGs, saving as PNG preserves LSB
-                secret_img = lsb.hide(filepath, message)
+                secret_img = lsb.hide(filepath, encrypted_message)
                 secret_img.save(output_filepath)
                 
                 # Cleanup original upload optionally
@@ -76,8 +88,14 @@ def decode():
             return redirect(request.url)
         
         file = request.files['image']
+        password = request.form.get('password')
+
         if file.filename == '':
             flash('No selected file')
+            return redirect(request.url)
+        
+        if not password:
+            flash('Password cannot be empty')
             return redirect(request.url)
 
         if file and allowed_file(file.filename):
@@ -86,14 +104,20 @@ def decode():
             file.save(filepath)
 
             try:
-                secret_message = lsb.reveal(filepath)
+                secret_message_encrypted = lsb.reveal(filepath)
                 
                 # Cleanup the uploaded file after reading
                 if os.path.exists(filepath):
                     os.remove(filepath)
 
-                if secret_message:
-                    return render_template('result.html', mode='decode', message=secret_message)
+                if secret_message_encrypted:
+                    try:
+                        f = Fernet(get_fernet_key(password))
+                        decrypted_message = f.decrypt(secret_message_encrypted.encode()).decode()
+                        return render_template('result.html', mode='decode', message=decrypted_message)
+                    except InvalidToken:
+                        flash('Incorrect password or corrupted image!')
+                        return redirect(request.url)
                 else:
                     flash('No hidden message found in the image.')
                     return redirect(request.url)
