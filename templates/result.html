@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="result-container">
+    {% if mode == 'encode' %}
+        <div class="success-icon">✓</div>
+        <h2>Encoding Successful!</h2>
+        <p>Your secret message has been successfully embedded into the image.</p>
+        <div class="action-box">
+            <a href="{{ url_for('download_file', filename=filename) }}" class="btn primary-btn download-btn">Download Encoded Image</a>
+        </div>
+        <p class="warning-text">Make sure to send this exact file (preferably without compression like WhatsApp) to preserve the hidden message.</p>
+    {% elif mode == 'decode' %}
+        <div class="success-icon lock-icon">🔓</div>
+        <h2>Message Extracted</h2>
+        <p>We found a hidden message inside your image:</p>
+        <div class="secret-message-box">
+            <p>{{ message }}</p>
+        </div>
+    {% endif %}
+    
+    <a href="{{ url_for('index') }}" class="btn secondary-btn back-btn">Go to Home</a>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-container">
+    <h2>Encode Message</h2>
+    <p class="subtitle">Upload an image and type a secret message to embed within it.</p>
+    
+    <form action="{{ url_for('encode') }}" method="POST" enctype="multipart/form-data">
+        <div class="input-group file-upload">
+            <label for="image">Cover Image (PNG/JPG)</label>
+            <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg" required>
+            <div class="file-preview" id="file-preview-text">Drag and drop or click to upload</div>
+        </div>
+        
+        <div class="input-group">
+            <label for="message">Secret Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="Enter the secret message here..." required></textarea>
+        </div>
+        
+        <button type="submit" class="btn submit-btn">Encode & Generate Image</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="hero">
+    <h1>Hide your secrets in plain sight.</h1>
+    <p>StegoVault uses advanced steganography algorithms to invisibly embed your text messages inside images. Safe, secure, and completely undetectable to the human eye.</p>
+    <div class="cta-buttons">
+        <a href="{{ url_for('encode') }}" class="btn primary-btn">Encode a Message</a>
+        <a href="{{ url_for('decode') }}" class="btn secondary-btn">Decode an Image</a>
+    </div>
+</div>
+{% endblock %}

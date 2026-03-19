@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-container">
+    <h2>Decode Message</h2>
+    <p class="subtitle">Upload an encoded image to extract the hidden message.</p>
+    
+    <form action="{{ url_for('decode') }}" method="POST" enctype="multipart/form-data">
+        <div class="input-group file-upload">
+            <label for="image">Encoded Image (PNG)</label>
+            <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg" required>
+            <div class="file-preview" id="file-preview-text">Drag and drop or click to upload</div>
+        </div>
+        
+        <button type="submit" class="btn submit-btn">Extract Secret Message</button>
+    </form>
+</div>
+{% endblock %}

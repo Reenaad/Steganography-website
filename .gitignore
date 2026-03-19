@@ -1,0 +1,17 @@
+# Environments
+venv/
+env/
+.env
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# User uploads (Temporary storage)
+uploads/
+!uploads/.gitkeep
+
+# IDEs
+.vscode/
+.idea/
