@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="form-container">
-    <h2>Encode Message</h2>
-    <p class="subtitle">Upload an image and type a secret message to embed within it.</p>
+    <h2>Cast Encoding Charm</h2>
+    <p class="subtitle">Upload a portrait and type a magical message to conceal within it.</p>
     
     <form action="{{ url_for('encode') }}" method="POST" enctype="multipart/form-data">
         <div class="input-group file-upload">
-            <label for="image">Cover Image (PNG/JPG)</label>
+            <label for="image">Cover Portrait (PNG/JPG)</label>
             <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg" required>
-            <div class="file-preview" id="file-preview-text">Drag and drop or click to upload</div>
+            <div class="file-preview" id="file-preview-text">Drag and drop or click to invoke</div>
         </div>
         
         <div class="input-group">
@@ -17,11 +17,11 @@
         </div>
         
         <div class="input-group">
-            <label for="password">Encryption Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter a secure password" required>
+            <label for="password">Encryption Charm</label>
+            <input type="password" id="password" name="password" placeholder="Enter a secure spell" required>
         </div>
         
-        <button type="submit" class="btn submit-btn">Encode & Generate Image</button>
+        <button type="submit" class="btn submit-btn">Conceal Secret Message</button>
     </form>
 </div>
 {% endblock %}

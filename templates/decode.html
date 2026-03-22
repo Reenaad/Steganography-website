@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="form-container">
-    <h2>Decode Message</h2>
-    <p class="subtitle">Upload an encoded image to extract the hidden message.</p>
+    <h2>Reveal Hidden Message</h2>
+    <p class="subtitle">Upload an enchanted portrait to extract the hidden magical message.</p>
     
     <form action="{{ url_for('decode') }}" method="POST" enctype="multipart/form-data">
         <div class="input-group file-upload">
-            <label for="image">Encoded Image (PNG)</label>
+            <label for="image">Enchanted Portrait (PNG)</label>
             <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg" required>
-            <div class="file-preview" id="file-preview-text">Drag and drop or click to upload</div>
+            <div class="file-preview" id="file-preview-text">Drag and drop or click to invoke</div>
         </div>
         
         <div class="input-group">
-            <label for="password">Decryption Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter the exact password used for encryption" required>
+            <label for="password">Decryption Charm</label>
+            <input type="password" id="password" name="password" placeholder="Enter the exact spell used for concealment" required>
         </div>
         
-        <button type="submit" class="btn submit-btn">Extract Secret Message</button>
+        <button type="submit" class="btn submit-btn">Reveal Secret</button>
     </form>
 </div>
 {% endblock %}
