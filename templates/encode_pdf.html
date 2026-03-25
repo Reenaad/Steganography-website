@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-container">
+    <h2>Parchment Charm</h2>
+    <p class="subtitle">Upload a cover parchment (PDF) and hide any secret file inside it.</p>
+    
+    <form action="{{ url_for('encode_pdf') }}" method="POST" enctype="multipart/form-data">
+        <div class="input-group file-upload">
+            <label for="cover_pdf">Cover Parchment (PDF)</label>
+            <input type="file" id="cover_pdf" name="cover_pdf" accept=".pdf" required>
+            <div class="file-preview">Choose cover PDF</div>
+        </div>
+        
+        <div class="input-group" style="flex-direction: row; gap: 1rem; margin-bottom: 1.5rem; justify-content: center;">
+            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem;"><input type="radio" name="secret_type" value="file" checked onchange="toggleSecretType()"> Hide File</label>
+            <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem;"><input type="radio" name="secret_type" value="text" onchange="toggleSecretType()"> Hide Text Message</label>
+        </div>
+        
+        <div class="input-group file-upload" id="file_input_block">
+            <label for="secret_file">Secret File / Document</label>
+            <input type="file" id="secret_file" name="secret_file" required>
+            <div class="file-preview">Choose file to hide</div>
+        </div>
+        
+        <div class="input-group" id="text_input_block" style="display: none;">
+            <label for="secret_text">Secret Message</label>
+            <textarea id="secret_text" name="secret_text" rows="4" placeholder="Type your magical message here..."></textarea>
+        </div>
+        
+        <div class="input-group">
+            <label for="password">Encryption Charm</label>
+            <input type="password" id="password" name="password" placeholder="Enter a secure spell" required>
+        </div>
+        
+        <button type="submit" class="btn submit-btn">CONCEAL IN PARCHMENT</button>
+    </form>
+</div>
+</div>
+
+<script>
+function toggleSecretType() {
+    var type = document.querySelector('input[name="secret_type"]:checked').value;
+    var fileBlock = document.getElementById('file_input_block');
+    var fileInput = document.getElementById('secret_file');
+    var textBlock = document.getElementById('text_input_block');
+    var textInput = document.getElementById('secret_text');
+    
+    if (type === 'file') {
+        fileBlock.style.display = 'flex';
+        fileInput.required = true;
+        textBlock.style.display = 'none';
+        textInput.required = false;
+    } else {
+        fileBlock.style.display = 'none';
+        fileInput.required = false;
+        textBlock.style.display = 'flex';
+        textInput.required = true;
+    }
+}
+</script>
+{% endblock %}

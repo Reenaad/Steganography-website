@@ -4,20 +4,42 @@
     {% if mode == 'encode' %}
         <div class="success-icon">✓</div>
         <h2>Encoding Successful!</h2>
-        <p>Your secret message has been successfully embedded into the image.</p>
-        <div class="action-box">
-            <a href="{{ url_for('download_file', filename=filename) }}" class="btn primary-btn download-btn">Download Encoded Image</a>
-        </div>
-        <p class="warning-text">Make sure to send this exact file (preferably without compression like WhatsApp) to preserve the hidden message.</p>
+        {% if type == 'pdf' %}
+            <p>Your secret document has been perfectly concealed within the parchment.</p>
+            <div class="action-box">
+                <a href="{{ url_for('download_file', filename=filename) }}" class="btn primary-btn download-btn">Download Protected PDF</a>
+            </div>
+            <p class="warning-text">Keep this enchanted parchment safe from Muggle eyes.</p>
+        {% elif type == 'image' %}
+            <p>Your secret portrait has been magically fused inside the cover portrait.</p>
+            <div class="action-box">
+                <a href="{{ url_for('download_file', filename=filename) }}" class="btn primary-btn download-btn">Download Enchanted Portrait</a>
+            </div>
+            <p class="warning-text">Avoid resizing or compressing this image (e.g. via WhatsApp) to preserve the hidden portrait.</p>
+        {% else %}
+            <p>Your secret message has been invisibly embedded into the portrait.</p>
+            <div class="action-box">
+                <a href="{{ url_for('download_file', filename=filename) }}" class="btn primary-btn download-btn">Download Enchanted Portrait</a>
+            </div>
+            <p class="warning-text">Avoid resizing or compressing this image to preserve the hidden message.</p>
+        {% endif %}
     {% elif mode == 'decode' %}
         <div class="success-icon lock-icon">🔓</div>
-        <h2>Message Extracted</h2>
-        <p>We found a hidden message inside your image:</p>
-        <div class="secret-message-box">
-            <p>{{ message }}</p>
-        </div>
+        <h2>Secret Revealed!</h2>
+        
+        {% if message %}
+            <p>We found a hidden message concealed within:</p>
+            <div class="secret-message-box">
+                <p>{{ message }}</p>
+            </div>
+        {% elif filename %}
+            <p>We discovered completely hidden material within the item:</p>
+            <div class="action-box" style="margin-top: 2rem;">
+                <a href="{{ url_for('download_file', filename=filename) }}" class="btn primary-btn download-btn">Download Hidden Data</a>
+            </div>
+        {% endif %}
     {% endif %}
     
-    <a href="{{ url_for('index') }}" class="btn secondary-btn back-btn">Go to Home</a>
+    <a href="{{ url_for('index') }}" class="btn secondary-btn back-btn">Return to Vault</a>
 </div>
 {% endblock %}

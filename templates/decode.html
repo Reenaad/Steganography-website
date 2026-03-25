@@ -6,8 +6,8 @@
     
     <form action="{{ url_for('decode') }}" method="POST" enctype="multipart/form-data">
         <div class="input-group file-upload">
-            <label for="image">Enchanted Portrait (PNG)</label>
-            <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg" required>
+            <label for="file">Enchanted Item (PNG/JPG/PDF)</label>
+            <input type="file" id="file" name="file" accept=".png, .jpg, .jpeg, .pdf" required>
             <div class="file-preview" id="file-preview-text">Drag and drop or click to invoke</div>
         </div>
         

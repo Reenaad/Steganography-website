@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-container">
+    <h2>Polyjuice Charm</h2>
+    <p class="subtitle">Upload a cover portrait and a secret image to magically fuse them together.</p>
+    
+    <form action="{{ url_for('encode_image') }}" method="POST" enctype="multipart/form-data">
+        <div class="input-group file-upload">
+            <label for="cover_image">Cover Portrait (PNG/JPG)</label>
+            <input type="file" id="cover_image" name="cover_image" accept=".png, .jpg, .jpeg" required>
+            <div class="file-preview">Choose primary portrait</div>
+        </div>
+        
+        <div class="input-group file-upload">
+            <label for="secret_image">Secret Portrait (PNG/JPG)</label>
+            <input type="file" id="secret_image" name="secret_image" accept=".png, .jpg, .jpeg" required>
+            <div class="file-preview">Choose secret portrait</div>
+        </div>
+        
+        <div class="input-group">
+            <label for="password">Encryption Charm</label>
+            <input type="password" id="password" name="password" placeholder="Enter a secure spell" required>
+        </div>
+        
+        <button type="submit" class="btn submit-btn">FUSE PORTRAITS</button>
+    </form>
+</div>
+{% endblock %}

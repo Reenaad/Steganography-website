@@ -2,10 +2,29 @@
 {% block content %}
 <div class="hero">
     <h1>Hide your secrets in the Restricted Section.</h1>
-    <p>StegoVault uses ancient steganography charms to invisibly conceal your magical messages inside portraits and parchments. Safe, secure, and completely undetectable by Muggles.</p>
-    <div class="cta-buttons">
-        <a href="{{ url_for('encode') }}" class="btn primary-btn">Cast Encoding Charm</a>
-        <a href="{{ url_for('decode') }}" class="btn secondary-btn">Reveal Hidden Message</a>
+    <p>StegoVault uses ancient steganography charms to invisibly conceal your magical messages, portraits, and parchments. Safe, secure, and completely undetectable by Muggles.</p>
+    
+    <div class="charms-grid">
+        <a href="{{ url_for('encode') }}" class="charm-card">
+            <div class="charm-icon">✒️</div>
+            <h3>Invisibility Charm</h3>
+            <p>Hide Text in Image</p>
+        </a>
+        <a href="{{ url_for('encode_image') }}" class="charm-card">
+            <div class="charm-icon">🖼️</div>
+            <h3>Polyjuice Potion</h3>
+            <p>Hide Image in Image</p>
+        </a>
+        <a href="{{ url_for('encode_pdf') }}" class="charm-card">
+            <div class="charm-icon">📜</div>
+            <h3>Parchment Charm</h3>
+            <p>Hide Data in PDF</p>
+        </a>
+        <a href="{{ url_for('decode') }}" class="charm-card decode-card">
+            <div class="charm-icon">✨</div>
+            <h3>Revelio Charm</h3>
+            <p>Reveal Any Secret</p>
+        </a>
     </div>
 </div>
 {% endblock %}
